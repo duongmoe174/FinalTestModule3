@@ -105,6 +105,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showUpdateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("categories", categoryService.selectAll());
         int id = Integer.parseInt(request.getParameter("id"));
         Product existProduct = productService.getById(id);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/edit.jsp");
@@ -121,9 +122,9 @@ public class ProductServlet extends HttpServlet {
         int number = Integer.parseInt(numberStr);
         String color = request.getParameter("color");
         String description = request.getParameter("description");
-        String idCategoryStr = request.getParameter("category_id");
+        String idCategoryStr = request.getParameter("categories");
         int category_id = Integer.parseInt(idCategoryStr);
-        Category category = new Category(idCategoryStr);
+        Category category = categoryService.getById(category_id);
         Product product = new Product(id, name, price, number, color, description, category);
         productService.update(product);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/edit.jsp");
