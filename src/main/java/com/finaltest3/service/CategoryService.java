@@ -33,13 +33,12 @@ public class CategoryService implements ICategoryService {
     @Override
     public List<Category> selectAll() {
         List<Category> categories = new ArrayList<>();
-        String query = "{CALL selectAllProduct()}";
+        String query = "{CALL selectAllCategory()}";
         try (CallableStatement callableStatement = connection.prepareCall(query)) {
             ResultSet resultSet = callableStatement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
-                Category category = new Category(id, name);
+                Category category = new Category(name);
                 categories.add(category);
             }
         } catch (SQLException e) {

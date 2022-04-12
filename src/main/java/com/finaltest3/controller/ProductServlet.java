@@ -65,7 +65,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-request.setAttribute("categories", categoryService.selectAll());
+    request.setAttribute("categories", categoryService.selectAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
         dispatcher.forward(request, response);
     }
@@ -85,7 +85,7 @@ request.setAttribute("categories", categoryService.selectAll());
         int number = Integer.parseInt(numberStr);
         String color = request.getParameter("color");
         String description = request.getParameter("description");
-        String idCategoryStr = request.getParameter("category_id");
+        String idCategoryStr = request.getParameter("categories");
         int category_id = Integer.parseInt(idCategoryStr);
         Category category = categoryService.getById(category_id);
         Product product = new Product(name, price, number, color, description, category);
