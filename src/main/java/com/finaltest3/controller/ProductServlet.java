@@ -2,6 +2,8 @@ package com.finaltest3.controller;
 
 import com.finaltest3.model.Category;
 import com.finaltest3.model.Product;
+import com.finaltest3.service.CategoryService;
+import com.finaltest3.service.ICategoryService;
 import com.finaltest3.service.IProductService;
 import com.finaltest3.service.ProductService;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @WebServlet(name = "ProductServlet", value = "/products")
 public class ProductServlet extends HttpServlet {
     IProductService productService = new ProductService();
+    ICategoryService categoryService = new CategoryService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,6 +65,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+request.setAttribute("categories", categoryService.selectAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
         dispatcher.forward(request, response);
     }
@@ -83,7 +87,7 @@ public class ProductServlet extends HttpServlet {
         String description = request.getParameter("description");
         String idCategoryStr = request.getParameter("category_id");
         int category_id = Integer.parseInt(idCategoryStr);
-        Category category = new Category(idCategoryStr);
+        Category category = categoryService.getById(category_id);
         Product product = new Product(name, price, number, color, description, category);
         productService.insert(product);
 

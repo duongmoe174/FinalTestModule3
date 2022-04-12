@@ -71,3 +71,17 @@ begin
     where id = p_id;
 end //
 DELIMITER  ;
+
+DELIMITER //
+create procedure getCategoryById (IN c_id int)
+begin
+    select name from category where id = c_id;
+end //
+DELIMITER ;
+
+DELIMITER //
+create procedure selectAllCategory()
+begin
+    select * from category;
+end //
+DELIMITER ;
